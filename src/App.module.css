@@ -1,0 +1,329 @@
+.app {
+  height: 100vh;
+  display: flex;
+  background: rgb(208, 216, 214);
+}
+
+/* Главная панель */
+.task {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: flex-start;
+  width: 50vw;
+  min-height: 40px;
+  border-radius: 20px;
+  color: rgb(104, 105, 105);
+  font-size: 24px;
+  margin: 45vh auto auto auto;
+  padding: 10px 0;
+  transition: background-color 0.3s;
+}
+
+.task_focused {
+  background: white;
+}
+
+.task_unfocused {
+  background: rgb(182, 187, 187);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.task_unfocused label {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.task_unfocused:hover {
+  background: rgb(154, 158, 158);
+  cursor: pointer;
+}
+
+/* Квадратик слева от текста ввода */
+.popper_container {
+  margin-left: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.popper_rectangle {
+  width: 26px;
+  height: 26px;
+  border-radius: 30%;
+  background-color: rgb(208, 216, 214);
+}
+
+/* Текст ввода */
+.input_text {
+  min-width: 10px;
+  outline: none;
+  flex-grow: 1;
+  max-width: 60%;
+  margin: auto 10px;
+  vertical-align: middle;
+}
+
+/* Цвет курсора */
+span {
+  caret-color: rgb(79, 80, 80);
+}
+
+/* Кнопка с календарем и кнопка со списком */
+.calendar,
+.list {
+  margin-right: 10px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+/* Календарь */
+.calendar {
+  width: 40px;
+  background-image: url(./svg/calendar.svg);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+}
+
+.calendar:hover,
+.list:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+/* Список */
+.list {
+  width: 22%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.list_text {
+  font-weight: 600;
+  font-size: 16px;
+  color: rgb(79, 80, 80);
+}
+
+.list_rectangle,
+.list_arrow {
+  width: 15px;
+  height: 15px;
+}
+
+/* Плейсхолдер для текста */
+[contenteditable="true"]:empty:before {
+  position: absolute;
+  content: attr(placeholder);
+  pointer-events: none;
+  color: rgb(131, 131, 131);
+}
+/* Плейсхолдер для комментария */
+span:before {
+  content: attr(placeholder);
+  pointer-events: none;
+  color: #f5c77e;
+}
+
+/* Анимация */
+@keyframes slashes_pop_up {
+  10% {
+    font-size: 24px;
+  }
+  50% {
+    font-size: 27px;
+  }
+  100% {
+    font-size: 24px;
+  }
+}
+
+@keyframes slashes_round_out {
+  10% {
+    box-shadow: 2px 2px 2px 2px;
+  }
+  50% {
+    box-shadow: 2px 2px 10px 10px;
+  }
+  99% {
+    box-shadow: 2px 2px 20px 20px;
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
+@keyframes popper_size {
+  0% {
+    width: 12px;
+    height: 12px;
+    transform: translateX(-40px);
+  }
+  50% {
+    width: 14px;
+    height: 14px;
+    transform: translateX(-20px);
+  }
+  100% {
+    width: 26px;
+    height: 26px;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes popper_big_triangle {
+  0% {
+    transform: translateX(-20px);
+  }
+  70% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes popper_small_triangle {
+  0% {
+    transform: translateX(-30px);
+  }
+  20% {
+    transform: translateX(-20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Анимация увеличения слэшей */
+span:first-child {
+  margin-left: 5.5px;
+  animation: slashes_pop_up 0.5s ease-in;
+}
+
+/* Анимация круглого свечения */
+span:first-child:after {
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  margin-top: 12px;
+  margin-left: -10px;
+  background: #f5c77e;
+  opacity: 0.3;
+  animation: slashes_round_out 0.5s ease-in-out;
+}
+
+/* Анимация увеличения квадрата */
+.popper_rectangle {
+  animation: popper_size 0.4s ease-out;
+}
+
+/* Анимация отделения квадрата от границы панели (Большой треугольник) */
+.popper_container:before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid rgb(208, 216, 214);
+  transform: translateX(-20px);
+  animation: popper_big_triangle 0.4s ease-in-out;
+}
+
+/* Анимация отделения квадрата от границы панели (Маленький треугольник) */
+.popper_container:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid rgb(208, 216, 214);
+  animation: popper_small_triangle 0.5s ease-out;
+}
+
+/* Базовая оптимизация под небольшие экраны */
+
+@media (max-width: 768px) {
+  .task {
+    width: 95vw;
+    margin: 35vh auto auto auto;
+    font-size: 18px;
+  }
+
+  .popper_rectangle {
+    border-radius: 30%;
+    background-color: rgb(208, 216, 214);
+  }
+
+  .input_text {
+    min-width: 10px;
+    outline: none;
+    flex-grow: 1;
+    max-width: 50%;
+    margin: auto 10px;
+  }
+
+  .calendar {
+    width: 10%;
+    background-image: url(./svg/calendar.svg);
+    background-repeat: no-repeat;
+    background-size: 1rem;
+    background-position: center;
+  }
+
+  .list_text {
+    font-size: 10px;
+  }
+
+  .list_rectangle,
+  .list_arrow {
+    width: 10px;
+    height: 10px;
+  }
+
+  @keyframes slashes_pop_up {
+    10% {
+      font-size: 18px;
+    }
+    50% {
+      font-size: 22px;
+    }
+    100% {
+      font-size: 18px;
+    }
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 768px) {
+  .task {
+    width: 90vw;
+    margin: 38vh auto auto auto;
+    font-size: 20px;
+  }
+
+  .list_text {
+    font-size: 14px;
+  }
+
+  .calendar {
+    width: 40px;
+    background-image: url(./svg/calendar.svg);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+  }
+
+  .list_rectangle,
+  .list_arrow {
+    width: 12px;
+    height: 12px;
+  }
+}
